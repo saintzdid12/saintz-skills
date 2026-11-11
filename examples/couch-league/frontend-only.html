@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Couch League, week 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #F6F7F9;
+  --sheet: #FFFFFF;
+  --ink: #15171B;
+  --ink-2: #464C56;
+  --ink-3: #686F7A;
+  --rule: #DADFE5;
+  --danger: #C4302B;
+  --r-s: 6px;
+  --r-m: 12px;
+  --wide: 125%;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body { margin: 0; color: var(--ink); font: 400 16px/1.55 Archivo, "Segoe UI", system-ui, sans-serif; font-stretch: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* masthead */
+.mast { display: flex; align-items: center; gap: 32px; padding-block: 20px; border-bottom: 2px solid var(--ink); }
+.mark { font-weight: 850; font-stretch: var(--wide); font-size: 22px; letter-spacing: -.02em; text-decoration: none; white-space: nowrap; }
+.mast nav { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; }
+.mast nav a { text-decoration: none; color: var(--ink-2); font-weight: 600; font-size: 15px; padding: 10px 0; white-space: nowrap; }
+.mast nav a[aria-current] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
+.mast nav a:hover { color: var(--ink); }
+.mast .end { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.wk { font-weight: 700; font-stretch: var(--wide); white-space: nowrap; }
+.btn { display: inline-flex; align-items: center; height: 44px; padding: 0 18px; border-radius: var(--r-s); font: inherit; font-weight: 700; font-size: 15px;
+  border: 2px solid var(--ink); background: var(--ink); color: var(--sheet); cursor: pointer; white-space: nowrap; transition: background .15s, color .15s; }
+.btn:hover { background: #2D3138; }
+.btn.line { background: transparent; color: var(--ink); }
+.btn.line:hover { background: var(--ink); color: var(--sheet); }
+
+/* lead game */
+.lead { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px 64px; padding-block: 48px 64px; }
+.meta { color: var(--ink-2); font-size: 15px; margin: 0 0 16px; }
+.lead > div:first-child { container-type: inline-size; min-width: 0; }
+.score { margin: 0; font-weight: 880; font-stretch: var(--wide); letter-spacing: -.035em; line-height: 1.02; font-size: clamp(30px, 10.4cqi, 96px); }
+.score span { display: flex; align-items: baseline; gap: .28em; white-space: nowrap; }
+.score i { width: .5em; height: .5em; flex: none; border-radius: 3px; align-self: center; }
+.score b { margin-left: auto; font-weight: inherit; font-variant-numeric: tabular-nums; }
+.score .lost { color: var(--ink-3); }
+.dek { font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; max-width: 34em; margin: 24px 0 0; color: var(--ink); text-wrap: pretty; }
+
+.chat h2 { font-size: 17px; font-weight: 750; margin: 0 0 4px; }
+.chat .sub { color: var(--ink-2); font-size: 15px; margin: 0 0 20px; }
+.chat ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.chat li { display: grid; grid-template-columns: 4px 1fr; gap: 14px; }
+.chat li i { border-radius: 2px; }
+.chat .who { font-weight: 700; font-size: 15px; }
+.chat .at { color: var(--ink-3); font-size: 14px; margin-left: 6px; }
+.chat p { margin: 2px 0 0; font-size: 17px; line-height: 1.45; }
+
+/* charts */
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding-bottom: 24px; }
+.qb h3 { margin: 0; font-size: 26px; font-weight: 820; font-stretch: var(--wide); letter-spacing: -.02em; }
+.qb .by { margin: 2px 0 16px; color: var(--ink-2); font-size: 15px; }
+.line-stats { display: flex; gap: 32px; margin: 0 0 16px; }
+.line-stats div { display: flex; flex-direction: column-reverse; }
+.line-stats dt { font-size: 14px; color: var(--ink-2); }
+.line-stats dd { margin: 0; font-size: 30px; font-weight: 800; font-stretch: var(--wide); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.field { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r-m); padding: 8px; }
+.field svg { display: block; width: 100%; height: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; padding: 0; margin: 0 0 64px; color: var(--ink-2); font-size: 14px; }
+.legend li { display: flex; align-items: center; gap: 8px; }
+.legend svg { width: 16px; height: 16px; }
+.pc-dot, .pc-trail { animation: plot .35s ease-out both; animation-delay: calc(var(--i) * 28ms + 200ms); }
+.pc-trail { animation-name: trail; }
+@keyframes plot { from { opacity: 0; } }
+@keyframes trail { from { opacity: 0; } }
+
+/* lower */
+.lower { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 64px; padding-block: 48px 96px; border-top: 2px solid var(--ink); }
+.lower h2 { font-size: 24px; font-weight: 820; font-stretch: var(--wide); letter-spacing: -.02em; margin: 0 0 16px; }
+.lower section + section { margin-top: 56px; }
+.todo { list-style: none; margin: 0; padding: 0; }
+.todo li { display: flex; gap: 24px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+.todo li:first-child { border-top: 1px solid var(--rule); }
+.todo div { flex: 1; min-width: 0; }
+.todo b { display: block; font-size: 18px; font-weight: 700; }
+.todo span { color: var(--ink-2); font-size: 15px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 16px; }
+th { text-align: left; font-size: 14px; font-weight: 600; color: var(--ink-2); padding: 0 8px 8px 0; border-bottom: 1px solid var(--ink); }
+td { padding: 11px 8px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+th.r, td.r { text-align: right; padding-right: 0; padding-left: 12px; }
+th.r + th, td.r + td { padding-left: 20px; }
+.tbl { overflow-x: auto; }
+.team { display: flex; align-items: center; gap: 10px; font-weight: 600; white-space: nowrap; }
+.team i { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.loser { color: var(--ink-3); font-weight: 500; }
+.status { color: var(--ink-2); font-size: 14px; }
+.standings td:first-child { color: var(--ink-3); width: 28px; }
+.neg { color: var(--danger); }
+
+.news { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px; }
+.news b { display: block; font-size: 19px; font-weight: 700; line-height: 1.3; }
+.news span { color: var(--ink-2); font-size: 15px; }
+
+footer { color: var(--ink-3); font-size: 14px; padding-block: 24px 40px; border-top: 1px solid var(--rule); }
+
+@media (max-width: 960px) {
+  .lead, .lower, .charts { grid-template-columns: minmax(0, 1fr); }
+  .score { font-size: clamp(26px, 9.4cqi, 96px); }
+  .mast { flex-wrap: wrap; gap: 8px 24px; }
+  .mast nav { order: 3; width: 100%; }
+  .lead { padding-block: 32px 48px; }
+}
+@media (max-width: 520px) {
+  .mast .end { margin-left: 0; }
+  .mast { justify-content: space-between; }
+  .line-stats { gap: 20px; }
+  .status { display: none; }
+  #results th:last-child { display: none; }
+  .line-stats dd { font-size: 24px; }
+  .todo li { flex-wrap: wrap; gap: 12px; }
+  .mast .wk { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="mark" href="#">Couch League</a>
+    <nav aria-label="Main">
+      <a href="#" aria-current="page">Home</a><a href="#">Scores</a><a href="#">Standings</a><a href="#">Stats</a><a href="#">Trades</a>
+    </nav>
+    <div class="end"><span class="wk">Week 11</span><button class="btn">Submit result</button></div>
+  </header>
+
+  <main>
+    <section class="lead" aria-labelledby="lead-score">
+      <div>
+        <p class="meta">Game of the week, Sunday night</p>
+        <h1 class="score" id="lead-score">
+          <span><i style="background:#D99A00"></i>Armadillos <b>31</b></span>
+          <span class="lost"><i style="background:#6A4FD8"></i>Night Owls <b>24</b></span>
+        </h1>
+        <p class="dek">Deshawn threw four touchdowns and ended the Owls’ six-game win streak. The dagger was a 31-yard strike on fourth-and-6, and the group chat was already going before the clock hit zero.</p>
+      </div>
+      <aside class="chat" aria-labelledby="chat-h">
+        <h2 id="chat-h">Meanwhile, in the group chat</h2>
+        <p class="sub">Sunday, right after the final whistle</p>
+        <ol id="chat"></ol>
+      </aside>
+    </section>
+
+    <section class="charts" aria-label="Pass charts" id="charts"></section>
+    <ul class="legend" aria-label="Chart key">
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="#15171B"/></svg>Complete</li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="none" stroke="#686F7A" stroke-width="2"/></svg>Incomplete</li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="#D99A00" stroke="#15171B" stroke-width="1.6"/></svg>Touchdown, in the passer’s team color</li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><g stroke="#C4302B" stroke-width="2.4" stroke-linecap="round"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></g></svg>Interception</li>
+      <li>Each chart starts at the line of scrimmage; depth in yards.</li>
+    </ul>
+
+    <div class="lower">
+      <div>
+        <section aria-labelledby="todo-h">
+          <h2 id="todo-h">Before Sunday</h2>
+          <ul class="todo">
+            <li><div><b>Play your week 12 game</b><span>Due Sunday at 11:59 PM. Anything unplayed by then gets simulated.</span></div><button class="btn line">See matchup</button></li>
+            <li><div><b>Vote on Kev’s trade</b><span>Two first-round picks for a 91 overall edge rusher. 5 of 7 owners have approved; voting closes Friday.</span></div><button class="btn line">Vote</button></li>
+          </ul>
+        </section>
+        <section aria-labelledby="res-h">
+          <h2 id="res-h">Week 11 results</h2>
+          <table id="results"><thead><tr><th>Winner</th><th class="r">Score</th><th>Loser</th><th class="r">Status</th></tr></thead><tbody></tbody></table>
+        </section>
+        <section aria-labelledby="news-h">
+          <h2 id="news-h">Around the league</h2>
+          <ul class="news">
+            <li><b>Coyotes lose their starting running back for three to five weeks</b><span>High ankle sprain in the third quarter of the overtime win over the Ironclads.</span></li>
+            <li><b>Harbor Kings move to 9 and 1 with a 38 to 10 win over the Thunder</b><span>They have now outscored the league by 142 points.</span></li>
+            <li><b>Pioneers and Bison play tonight at 9:00 PM</b><span>A Bison win pulls them level with the Pioneers at 7 and 4.</span></li>
+          </ul>
+        </section>
+      </div>
+      <section aria-labelledby="st-h">
+        <h2 id="st-h">Standings</h2>
+        <table class="standings" id="standings"><thead><tr><th><span class="vh">Rank</span></th><th>Team</th><th class="r">W–L</th><th class="r">Diff</th></tr></thead><tbody></tbody></table>
+      </section>
+    </div>
+  </main>
+  <footer>Couch League, season 3, franchise mode. Eight teams, one group chat.</footer>
+</div>
+
+<script src="league-data.js"></script>
+<script>
+const teamCell = (k, cls = '') => `<span class="team ${cls}"><i style="background:${TEAMS[k].color}"></i>${TEAMS[k].name}</span>`;
+document.getElementById('chat').innerHTML = CHAT.map(m =>
+  `<li><i style="background:${TEAMS[m.team].color}"></i><div><span class="who">${m.who}</span><span class="at">${m.at}</span><p>${m.text}</p></div></li>`).join('');
+
+const colors = { line: '#E2E6EB', label: '#686F7A', ink: '#15171B', muted: '#686F7A', danger: '#C4302B' };
+document.getElementById('charts').innerHTML = Object.values(QBS).map(q => `
+  <article class="qb">
+    <h3>${q.name}</h3>
+    <p class="by">${TEAMS[q.team].name} quarterback, played by ${q.handle}</p>
+    <dl class="line-stats">
+      <div><dt>Comp/att</dt><dd>${q.comp}/${q.att}</dd></div>
+      <div><dt>Yards</dt><dd>${q.yds}</dd></div>
+      <div><dt>TD</dt><dd>${q.td}</dd></div>
+      <div><dt>INT</dt><dd>${q.int}</dd></div>
+    </dl>
+    <div class="field">${passChart(q, { ...colors, team: TEAMS[q.team].color })}</div>
+  </article>`).join('');
+
+document.querySelector('#results tbody').innerHTML = GAMES.map(g => {
+  if (g.as == null) return `<tr><td>${teamCell(g.a)}</td><td class="r status">vs</td><td>${teamCell(g.b)}</td><td class="r status">${g.status}</td></tr>`;
+  const [w, l, ws, ls] = g.as > g.bs ? [g.a, g.b, g.as, g.bs] : [g.b, g.a, g.bs, g.as];
+  return `<tr><td>${teamCell(w)}</td><td class="r num"><b>${ws}</b> to ${ls}</td><td>${teamCell(l, 'loser')}</td><td class="r status">${g.status}</td></tr>`;
+}).join('');
+
+document.querySelector('#standings tbody').innerHTML = Object.keys(TEAMS).map((k, i) => {
+  const t = TEAMS[k];
+  return `<tr><td class="num">${i + 1}</td><td>${teamCell(k)}</td><td class="r num">${t.w}–${t.l}</td><td class="r num ${t.diff < 0 ? 'neg' : ''}">${fmtDiff(t.diff)}</td></tr>`;
+}).join('');
+</script>
+<style>.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }</style>
+</body>
+</html>

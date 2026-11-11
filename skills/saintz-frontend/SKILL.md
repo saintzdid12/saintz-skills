@@ -78,9 +78,13 @@ what changed. Then build.
    (`<skill-dir>` is this skill's folder, e.g. `~/.claude/skills/saintz-frontend`.) Fix every **FAIL**.
    For each **WARN**, fix it or state in one line why the brief needs it. If Node isn't available, do the same
    checks by searching the code for the patterns listed in §6.
-2. **Look at it.** Render it (browser pane / preview / headless screenshot) at **375px and 1440px** wide, and
-   review the screenshots against §6, §7 and §12. Fix what you see, re-check. If you truly cannot render,
-   say so explicitly — don't claim it was reviewed.
+2. **Look at it.** Take full-page screenshots at true device widths:
+   `node <skill-dir>/scripts/shoot.mjs <file-or-url> --widths 375,768,1440 --out <dir>`
+   (uses an installed Chrome/Edge with device emulation; it also reports horizontal **OVERFLOW**). Don't rely on
+   `--window-size` for phone widths: Chrome on Windows clamps it to ~500px and silently crops. Open each image and
+   review it against §6, §7 and §12. Typical catches: headlines sized to the window instead of their column (size
+   display type with container units, `cqi`), table columns touching, nav items clipped on phones. Fix, re-shoot,
+   re-scan. If you truly cannot render, say so explicitly — don't claim it was reviewed.
 3. **Remove one accessory** — the decoration doing the least work.
 4. Report briefly: the angle, what was banned, the signature, and the scan result.
 

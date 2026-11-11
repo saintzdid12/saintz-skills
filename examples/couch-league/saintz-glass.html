@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Couch League</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #000;
+  --text: #f5f5f7;
+  --text-2: rgba(235,235,245,.68);
+  --text-3: rgba(235,235,245,.5);
+  --line: rgba(255,255,255,.09);
+  --on: rgba(255,255,255,.94);
+  --lg-fill: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.05) 55%, rgba(255,255,255,.03));
+  --lg-tint: rgba(38,38,44,.38);
+  --lg-edge: rgba(255,255,255,.13);
+  --lg-shadow: inset 0 1px 0 rgba(255,255,255,.24), inset 0 -1px 0 rgba(255,255,255,.04), 0 12px 36px rgba(0,0,0,.32);
+  --lg-blur: blur(40px) saturate(210%) brightness(1.04);
+  --spring: cubic-bezier(.2,.9,.25,1.1);
+  --ease: cubic-bezier(.25,.8,.25,1);
+  --gutter: clamp(16px, 4.4vw, 64px);
+  --danger: #ff6b5e;
+  --r-m: 14px;
+  --r-l: 22px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font: 400 15px/1.5 Inter, -apple-system, "Segoe UI Variable Text", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased; letter-spacing: -.005em; }
+button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+:focus-visible { outline: 2px solid rgba(255,255,255,.7); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.glass { background: var(--lg-fill), var(--lg-tint); border: 1px solid var(--lg-edge); box-shadow: var(--lg-shadow);
+  backdrop-filter: var(--lg-blur); -webkit-backdrop-filter: var(--lg-blur); }
+
+/* nav */
+.nav { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: 12px;
+  padding: 16px var(--gutter); }
+.brand { font-weight: 750; font-size: 17px; letter-spacing: -.02em; white-space: nowrap; }
+.brand small { display: block; font-size: 13px; font-weight: 500; color: var(--text-2); letter-spacing: 0; }
+.tabs { display: flex; gap: 2px; padding: 4px; border-radius: 999px; overflow-x: auto; scrollbar-width: none; }
+.tabs button { height: 34px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--text-2); white-space: nowrap; transition: color .2s, background .25s; }
+.tabs button:hover { color: var(--text); }
+.tabs button[aria-current] { background: var(--on); color: #000; box-shadow: inset 0 1px 0 #fff, 0 4px 14px rgba(0,0,0,.25); }
+.nav .end { justify-self: end; display: flex; align-items: center; gap: 14px; }
+.wk { font-weight: 650; color: var(--text-2); white-space: nowrap; }
+.btn { height: 42px; padding: 0 20px; border-radius: var(--r-m); font-weight: 650; display: inline-flex; align-items: center; white-space: nowrap;
+  transition: transform .3s var(--spring), background .25s; }
+.btn:hover { transform: scale(1.04); }
+.btn:active { transform: scale(.97); }
+.btn.primary { background: var(--on); color: #000; box-shadow: inset 0 1px 0 #fff, 0 10px 30px rgba(0,0,0,.35); }
+
+/* hero: the game, lit by the winner's color */
+.hero { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 32px clamp(32px, 5vw, 80px); align-items: center;
+  padding: clamp(24px, 5vh, 56px) var(--gutter) 64px; }
+.hero::before { content: ""; position: absolute; inset: -80px 0 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(60% 70% at 28% 30%, rgba(217,154,0,.12), transparent 70%); }
+.when { color: var(--text-2); font-weight: 500; margin: 0 0 14px; }
+.hero > div:first-child { container-type: inline-size; min-width: 0; }
+.score { margin: 0; font-weight: 800; letter-spacing: -.045em; line-height: 1.04; font-size: clamp(30px, 12cqi, 92px); }
+.score span { display: flex; align-items: center; gap: .3em; white-space: nowrap; }
+.score i { width: .42em; height: .42em; border-radius: 50%; flex: none; }
+.score b { margin-left: auto; font-variant-numeric: tabular-nums; }
+.score .lost { color: var(--text-3); }
+.dek { font-size: clamp(16px, 1.3vw, 18px); line-height: 1.55; color: rgba(255,255,255,.84); max-width: 32em; margin: 22px 0 26px; text-wrap: pretty; }
+
+.chartbox { display: flex; flex-direction: column; gap: 16px; }
+.chart-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; }
+.seg button { height: 32px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--text-2); transition: background .25s, color .2s; }
+.seg button[aria-pressed="true"] { background: var(--on); color: #000; }
+.stats { display: flex; gap: 28px; margin: 0; }
+.stats div { display: flex; flex-direction: column-reverse; }
+.stats dt { font-size: 13px; color: var(--text-2); }
+.stats dd { margin: 0; font-size: 24px; font-weight: 750; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.field { position: relative; border-radius: var(--r-l); overflow: hidden; background: #0b0b0d; box-shadow: inset 0 0 0 1px var(--line), 0 30px 80px rgba(0,0,0,.6); }
+.field svg { display: block; width: 100%; height: auto; max-height: 60vh; }
+.by { color: var(--text-2); font-size: 14px; margin: 0; }
+.key { display: flex; flex-wrap: wrap; gap: 6px 20px; list-style: none; padding: 0; margin: 0; color: var(--text-2); font-size: 13px; }
+.key li { display: flex; align-items: center; gap: 7px; }
+.key svg { width: 14px; height: 14px; }
+.pc-dot, .pc-trail { animation: plot .4s var(--ease) both; animation-delay: calc(var(--i) * 26ms + 150ms); }
+@keyframes plot { from { opacity: 0; } }
+.swap .pc-dot, .swap .pc-trail { animation-duration: .25s; animation-delay: calc(var(--i) * 10ms); }
+
+/* chat strip */
+.chat { padding: 0 var(--gutter) 72px; }
+.chat ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 32px; }
+.chat li { border-top: 2px solid var(--c); padding-top: 14px; }
+.chat .who { font-weight: 650; font-size: 14px; }
+.chat .at { color: var(--text-3); font-size: 13px; margin-left: 6px; }
+.chat p { margin: 4px 0 0; font-size: 17px; line-height: 1.4; color: rgba(255,255,255,.9); }
+h2 { font-size: 22px; font-weight: 700; letter-spacing: -.025em; margin: 0 0 16px; }
+
+/* lower: everything on the stage */
+.lower { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px clamp(32px, 5vw, 80px); padding: 56px var(--gutter) 96px; border-top: 1px solid var(--line); }
+.lower section + section { margin-top: 56px; }
+.todo { list-style: none; margin: 0; padding: 0; }
+.todo li { display: flex; align-items: center; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.todo div { flex: 1; min-width: 0; }
+.todo b { display: block; font-size: 17px; font-weight: 650; }
+.todo span { color: var(--text-2); font-size: 14.5px; }
+.todo .btn { height: 38px; padding: 0 16px; font-size: 14px; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 13px; font-weight: 600; color: var(--text-3); padding: 0 8px 10px 0; }
+td { padding: 12px 8px 12px 0; border-top: 1px solid var(--line); }
+th.r, td.r { text-align: right; padding-right: 0; padding-left: 12px; }
+th.r + th, td.r + td { padding-left: 20px; }
+.team { display: flex; align-items: center; gap: 10px; font-weight: 600; white-space: nowrap; }
+.team i { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.loser { color: var(--text-3); font-weight: 500; }
+.status { color: var(--text-2); font-size: 14px; }
+.standings td:first-child { color: var(--text-3); width: 28px; }
+.neg { color: var(--danger); }
+.news { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+.news b { display: block; font-size: 17px; font-weight: 650; line-height: 1.35; }
+.news span { color: var(--text-2); font-size: 14.5px; }
+
+@media (max-width: 1080px) { .chat ol { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 960px) {
+  .hero, .lower { grid-template-columns: minmax(0, 1fr); }
+  .chartbox, .lower > div { min-width: 0; }
+  .nav { grid-template-columns: auto minmax(0,1fr) auto; }
+  .tabs { justify-self: center; max-width: 100%; }
+}
+@media (max-width: 640px) {
+  .nav { grid-template-columns: 1fr auto; }
+  .tabs { grid-column: 1 / -1; grid-row: 2; justify-self: stretch; }
+  .tabs button { flex: 1 0 auto; padding: 0 11px; font-size: 13.5px; }
+  .wk { display: none; }
+  .chat ol { grid-template-columns: 1fr; gap: 20px; }
+  .stats { gap: 18px; }
+  .stats dd { font-size: 20px; }
+  .chart-head { gap: 12px; }
+  .todo li { flex-wrap: wrap; gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="brand">Couch League<small>Season 3, week 11</small></div>
+  <nav class="tabs glass" aria-label="Main">
+    <button aria-current="page">Home</button><button>Scores</button><button>Standings</button><button>Stats</button><button>Trades</button>
+  </nav>
+  <div class="end"><span class="wk">8 teams</span><button class="btn primary">Submit result</button></div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="score">
+    <div>
+      <p class="when">Sunday night, game of the week</p>
+      <h1 class="score" id="score">
+        <span><i style="background:#D99A00"></i>Armadillos <b>31</b></span>
+        <span class="lost"><i style="background:#6A4FD8"></i>Night Owls <b>24</b></span>
+      </h1>
+      <p class="dek">Deshawn threw four touchdowns and ended the Owls’ six-game streak. The dagger: a 31-yard strike on fourth-and-6.</p>
+      <button class="btn primary">Open box score</button>
+    </div>
+    <div class="chartbox">
+      <div class="chart-head">
+        <div class="seg glass" role="group" aria-label="Quarterback">
+          <button aria-pressed="true" data-qb="deshawn">Deshawn</button><button aria-pressed="false" data-qb="tyler">Tyler</button>
+        </div>
+        <dl class="stats" id="stats"></dl>
+      </div>
+      <div class="field" id="field"></div>
+      <p class="by" id="by"></p>
+      <ul class="key" aria-label="Chart key">
+        <li><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="#f5f5f7"/></svg>Complete</li>
+        <li><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="rgba(235,235,245,.5)" stroke-width="1.8"/></svg>Incomplete</li>
+        <li><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="#D99A00"/></svg>Touchdown</li>
+        <li><svg viewBox="0 0 14 14" aria-hidden="true"><g stroke="#ff6b5e" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="3" x2="11" y2="11"/><line x1="11" y1="3" x2="3" y2="11"/></g></svg>Interception</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="chat" aria-labelledby="chat-h">
+    <h2 id="chat-h">The group chat, ten minutes later</h2>
+    <ol id="chat"></ol>
+  </section>
+
+  <div class="lower">
+    <div>
+      <section aria-labelledby="todo-h">
+        <h2 id="todo-h">Before Sunday</h2>
+        <ul class="todo">
+          <li><div><b>Play your week 12 game</b><span>Due Sunday at 11:59 PM. Anything unplayed gets simulated.</span></div><button class="btn glass">See matchup</button></li>
+          <li><div><b>Vote on Kev’s trade</b><span>Two first-round picks for a 91 overall edge rusher. 5 of 7 have approved; voting closes Friday.</span></div><button class="btn glass">Vote</button></li>
+        </ul>
+      </section>
+      <section aria-labelledby="news-h">
+        <h2 id="news-h">Around the league</h2>
+        <ul class="news">
+          <li><b>Coyotes lose their starting running back for three to five weeks</b><span>High ankle sprain in the third quarter of the overtime win over the Ironclads.</span></li>
+          <li><b>Harbor Kings go to 9 and 1 after a 38 to 10 win over the Thunder</b><span>They have outscored the league by 142 points.</span></li>
+          <li><b>Pioneers and Bison play tonight at 9:00 PM</b><span>A Bison win pulls them level with the Pioneers at 7 and 4.</span></li>
+        </ul>
+      </section>
+    </div>
+    <div>
+      <section aria-labelledby="st-h">
+        <h2 id="st-h">Standings</h2>
+        <table class="standings" id="standings"><thead><tr><th><span class="vh">Rank</span></th><th>Team</th><th class="r">W–L</th><th class="r">Diff</th></tr></thead><tbody></tbody></table>
+      </section>
+      <section aria-labelledby="res-h">
+        <h2 id="res-h">Week 11 results</h2>
+        <table id="results"><thead><tr><th>Winner</th><th class="r">Score</th><th>Loser</th></tr></thead><tbody></tbody></table>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script src="league-data.js"></script>
+<script>
+const teamCell = (k, cls = '') => `<span class="team ${cls}"><i style="background:${TEAMS[k].color}"></i>${TEAMS[k].name}</span>`;
+const colors = { line: 'rgba(255,255,255,.08)', label: 'rgba(235,235,245,.5)', ink: '#f5f5f7', muted: 'rgba(235,235,245,.5)', danger: '#ff6b5e', labelSize: 22 };
+function showQB(id, swap) {
+  const q = QBS[id];
+  document.getElementById('stats').innerHTML =
+    `<div><dt>Comp/att</dt><dd>${q.comp}/${q.att}</dd></div><div><dt>Yards</dt><dd>${q.yds}</dd></div><div><dt>TD</dt><dd>${q.td}</dd></div><div><dt>INT</dt><dd>${q.int}</dd></div>`;
+  const f = document.getElementById('field');
+  f.classList.toggle('swap', !!swap);
+  f.innerHTML = passChart(q, { ...colors, team: TEAMS[q.team].color });
+  document.getElementById('by').textContent = `${q.name}, ${TEAMS[q.team].name}, played by ${q.handle}. Every attempt, plotted where the ball arrived.`;
+  document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.qb === id));
+}
+document.querySelectorAll('.seg button').forEach(b => b.onclick = () => showQB(b.dataset.qb, true));
+showQB('deshawn');
+
+document.getElementById('chat').innerHTML = CHAT.map(m =>
+  `<li style="--c:${TEAMS[m.team].color}"><span class="who">${m.who}</span><span class="at">${m.at}</span><p>${m.text}</p></li>`).join('');
+document.querySelector('#results tbody').innerHTML = GAMES.map(g => {
+  if (g.as == null) return `<tr><td>${teamCell(g.a)}</td><td class="r status">${g.status}</td><td>${teamCell(g.b)}</td></tr>`;
+  const [w, l, ws, ls] = g.as > g.bs ? [g.a, g.b, g.as, g.bs] : [g.b, g.a, g.bs, g.as];
+  return `<tr><td>${teamCell(w)}</td><td class="r num"><b>${ws}</b> to ${ls}${g.status !== 'Final' ? ' <span class="status">OT</span>' : ''}</td><td>${teamCell(l, 'loser')}</td></tr>`;
+}).join('');
+document.querySelector('#standings tbody').innerHTML = Object.keys(TEAMS).map((k, i) => {
+  const t = TEAMS[k];
+  return `<tr><td class="num">${i + 1}</td><td>${teamCell(k)}</td><td class="r num">${t.w}–${t.l}</td><td class="r num ${t.diff < 0 ? 'neg' : ''}">${fmtDiff(t.diff)}</td></tr>`;
+}).join('');
+</script>
+<style>.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }</style>
+</body>
+</html>

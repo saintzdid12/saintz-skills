@@ -24,7 +24,21 @@ A list of "don't do this" isn't enough. Left alone, a model drifts back to the s
 node ~/.claude/skills/saintz-frontend/scripts/slop-check.mjs path/to/your/ui
 ```
 
-It needs Node and has no dependencies. It reports **FAIL** (fix it) and **WARN** (fix it or justify it) for template chrome, decorative gradients, card-kit patterns, accent overuse, text under 12px, filler copy, missing reduced-motion support, missing focus styles, and more. It exits with code 1 if anything fails, so you can also use it in CI.
+A second script takes full-page screenshots at true phone, tablet and desktop widths (using your installed Chrome or Edge) and flags horizontal overflow:
+
+```bash
+node ~/.claude/skills/saintz-frontend/scripts/shoot.mjs path/to/page.html --widths 375,768,1440 --out shots
+```
+
+Both need Node 22+ and have no dependencies. The slop scan It reports **FAIL** (fix it) and **WARN** (fix it or justify it) for template chrome, decorative gradients, card-kit patterns, accent overuse, text under 12px, filler copy, missing reduced-motion support, missing focus styles, and more. It exits with code 1 if anything fails, so you can also use it in CI.
+
+## Example
+
+[`examples/couch-league`](examples/couch-league) is the same brief (a home page for a private 8-team franchise league) built twice by following the skills: once with `saintz-frontend` alone, and once with both skills. Both pass the slop scan and were checked at 375, 768 and 1440px.
+
+| `saintz-frontend` only | `saintz-design` + `saintz-frontend` |
+|---|---|
+| ![Light stat-sheet version](examples/couch-league/frontend-only-1440.png) | ![Dark glass version](examples/couch-league/saintz-glass-1440.png) |
 
 ## Install
 

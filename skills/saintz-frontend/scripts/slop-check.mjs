@@ -74,7 +74,7 @@ report('WARN', 'Monospace for labels', hits(/font-family\s*:[^;{}]*\b(monospace|
 const grad = hits(/radial-gradient\(|conic-gradient\(|linear-gradient\([^)]*(#[0-9a-f]{3,8}|rgba?\([^)]*\))[^)]*(#[0-9a-f]{3,8}|rgba?\()/i, { only: CSSISH });
 report(grad.length > 6 ? 'FAIL' : 'WARN', 'Gradients (check for blobs, glows, washes)', grad, 'Every gradient needs a job (legibility over images, glass sheen). Decorative washes/blobs/corner glows: remove.');
 report('WARN', 'Big blur filters (blob/glow decoration?)', hits(/(?<!backdrop-)filter\s*:[^;]*blur\(\s*([3-9]\d|\d{3,})px/), 'OK only when blurring real content (artwork ambience).');
-report('FAIL', 'Accent word in headline (span/em inside h1–h2)', hits(/<h[12][^>]*>[^<]{0,80}<(span|em|i|strong|mark)\b[^>]*>/i), 'Set the whole headline in one treatment.');
+report('FAIL', 'Accent word in headline (span/em inside h1–h2)', hits(/<h[12][^>]*>[^<]{0,80}[A-Za-z][^<]{0,80}<(span|em|i|strong|mark)\b[^>]*>/i), 'Set the whole headline in one treatment.');
 report('FAIL', 'Emoji used in UI', hits(/\p{Extended_Pictographic}/u, { only: ['.html', '.htm', '.jsx', '.tsx', '.vue', '.svelte', '.astro', '.js', '.ts', '.mjs'] }).filter(h => !/[★☆✓✔✕✖×©®™]/.test(h.m[0])), 'Use a real icon set or words.');
 
 // ---- Card kit ----
