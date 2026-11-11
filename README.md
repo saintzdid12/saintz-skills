@@ -30,7 +30,7 @@ A second script takes full-page screenshots at true phone, tablet and desktop wi
 node ~/.claude/skills/saintz-frontend/scripts/shoot.mjs path/to/page.html --widths 375,768,1440 --out shots
 ```
 
-Both need Node 22+ and have no dependencies. The slop scan It reports **FAIL** (fix it) and **WARN** (fix it or justify it) for template chrome, decorative gradients, card-kit patterns, accent overuse, text under 12px, filler copy, missing reduced-motion support, missing focus styles, and more. It exits with code 1 if anything fails, so you can also use it in CI.
+Both need Node 22+ and have no dependencies. The slop scan reports **FAIL** (fix it) and **WARN** (fix it or justify it) for template chrome, decorative gradients, card-kit patterns, accent overuse, text under 12px, filler copy, missing reduced-motion support, missing focus styles, and more. It exits with code 1 if anything fails, so you can also use it in CI.
 
 ## Example
 
