@@ -5,221 +5,209 @@ description: Process and quality bar for distinctive, intentional front-end desi
 
 # Saintz Frontend
 
-Design like the lead of a small studio whose clients pay for a point of view. Every interface should look like
-it was made **for this subject, for these people, on purpose** — not assembled from the same kit as every other
-generated page. Distinctive does not mean loud: the best apps (Linear, Things, Stripe, Arc, Raycast, Apple's own
-apps, Teenage Engineering, Figma) are mostly calm, disciplined systems with one or two memorable decisions.
+Design like the lead of a small studio whose clients pay for a point of view. The result must look like it was
+made **for this product and these people, on purpose** — something you couldn't move onto a competitor's site
+without everyone noticing. Distinctive does not mean loud: great apps (Linear, Things, Stripe, Arc, Raycast,
+Apple's apps, Teenage Engineering) are calm, disciplined systems with one or two memorable decisions.
 
-**Relationship to `saintz-design`:** that skill is Saintz's own house look (dark liquid glass) for Saintz's apps.
-When work is for one of those apps, or the user asks for that look, use its visual language and use *this* skill for
-process, layout, spacing, copy and quality. For anything else — a new brand, a client site, a different product —
-this skill decides the look from the brief. The user's explicit words always override both.
+**Why this skill has hard steps:** a list of things to avoid is not enough — left alone, the model drifts back to
+the statistically likely design (dark background + one bright accent, everything in rounded cards, a tiny label
+above every heading, `A · B · C` meta lines, the category's stock look). So the process below has **required
+outputs and a required check**. Do not skip them, even for "quick" UIs.
 
----
-
-## 1. Start from the subject, not from a template
-
-Before choosing a single color, write down (briefly, to yourself or the user):
-- **Subject** — what the thing actually is, in one sentence.
-- **Audience** — who uses it, how often, on what device, in what mood.
-- **Primary job** — the one thing a visitor/user must be able to do or understand.
-- **Vernacular** — the materials, objects, textures, words and conventions of that subject's world
-  (a climbing gym: chalk, tape, grade charts, route colors; a tax tool: ledgers, forms, calm certainty).
-
-If the brief doesn't say what the product is, propose a concrete subject/audience/job and confirm it.
-Use anything known about the user (memory, their other projects) as a hint. Distinctive choices come from the
-vernacular, never from "what websites usually look like". Use real, specific content throughout — real names,
-real numbers, real copy — never lorem ipsum or "Feature One".
+**With `saintz-design`:** that skill is Saintz's house look (dark liquid glass). When it applies, it supplies the
+visual language; *this* skill still runs the full process, budgets and check. Nothing in the house style exempts a
+design from §6–§7. The user's explicit words override both skills.
 
 ---
 
-## 2. Process: plan → challenge → build → critique
+## 1. Required step A — The brief (write it out)
 
-**Pass 1 — a compact design plan** (keep it short):
-- **Color:** 4–6 named hex values with roles (ground, surface, ink, muted ink, accent, signal).
-- **Type:** 1–2 families with roles, plus the type scale.
-- **Space & shape:** base unit, spacing scale, radius scale, elevation approach.
-- **Layout:** one-sentence concept + a small ASCII wireframe; compare 2 options when unsure. State alignment
-  (left / centered / asymmetric) and grid.
-- **Signature:** the *one* memorable thing (a typographic treatment, an interaction, an illustration style, a
-  layout idea) — and what stays quiet around it.
-- **Motion:** what moves, why, and how fast.
+Before any code, write this block in your response (short):
 
-**Pass 2 — challenge the plan.** For each part ask: *would I produce this for any similar brief?* If yes, it's a
-default, not a choice — revise it and say what changed and why. Check against the slop list (§3).
+```
+Subject:   what it actually is, one sentence
+Audience:  who, how often, what device, what mood
+Job:       the one thing a visitor must do or understand
+Angle:     what makes THIS one different from others in its category
+Unique:    the content only this product has (data, artifacts, voice, people)
+```
 
-**Build** following the revised plan, then **critique**: take screenshots if the environment allows (browser pane,
-preview), view at desktop, tablet and phone widths, in light/dark if both exist, and fix what you see. Before
-finishing, remove one accessory — cut the decoration that does the least work.
+If the brief is vague, propose these and confirm. Use what you know about the user as hints.
 
----
+**The angle is the most important line.** "A sports league site" has no angle. "A league between 8 friends, run
+from a group chat, where the trash talk matters more than the stats" does — and it changes everything downstream.
 
-## 3. The slop list — defaults that make a page look generated
+## 2. Required step B — Ban the obvious
 
-These are fine *when the brief calls for them*; never reach for them by reflex:
-1. Warm cream background (~`#F4F1EA`) + high-contrast serif + terracotta/clay accent (~`#D97757`).
-2. Near-black background with one acid-green / vermilion / electric-purple accent.
-3. Purple-to-blue (or pink-to-orange) gradient washes, blurred gradient "blobs", glowing orbs as decoration.
-4. Broadsheet cosplay: hairline rules everywhere, zero radius, dense newspaper columns with no reason.
-5. The SaaS card kit: everything chopped into identical rounded cards, one radius on everything, the same
-   `rgba(0,0,0,.1)` shadow under each, three feature cards with an icon in a tinted circle.
-6. Hero = huge number + tiny label + stats row + gradient accent; or centered headline + subhead + two buttons + screenshot in a fake browser frame.
-7. Template chrome: a tracked-out ALL-CAPS eyebrow over every heading; `A · B · C` meta strings; `WORD — fragment`
-   labels; monospace for small labels; `→` appended to every link/button; "01 / 02 / 03" markers on content that isn't a sequence.
-8. Accenting one word of the headline in italic, gradient or a different color.
-9. Emoji as icons; generic stock 3D illustrations; random sparkle ✨ icons for "AI".
-10. Fade-and-slide-up on every section, hover-lift on every card, parallax for its own sake.
-11. Filler copy: "Unlock the power of…", "Seamlessly…", "Elevate your workflow", "Built for the modern…", testimonials from "Sarah K.".
-12. Inter/Roboto/system font chosen only because it's there.
+Write the **3–5 choices anyone would make first for this category**, then rule them out:
 
-If you catch yourself producing any of these, stop and make a decision grounded in §1.
+```
+Obvious for <category>: <choice>, <choice>, <choice>, <choice>
+Banned unless the brief asks for them.
+```
 
----
+Examples: sports → turf green, condensed athletic type, score ticker, giant ghost numbers, ESPN layout;
+finance → navy + green, line charts in cards, "trusted by" logos; developer tool → near-black + neon,
+monospace everywhere, terminal hero; wellness → beige/sage, soft serif, blob shapes; AI product → purple
+gradients, sparkles, glowing orb; music → black + one neon, waveform hero; restaurant → cream + serif + terracotta.
 
-## 4. Layout
+Using the subject's world is good; using **its stereotype** is slop. Go one layer deeper than the stereotype
+(for the friends' league: the group chat, the commissioner's rulings, rivalries, receipts of bad trades — not
+yard lines).
 
-- **Have a grid and stick to it.** 12-column for marketing/editorial (max content ~1100–1280px), simple 1–3 column
-  flows for apps. Edges line up: text, images and controls share left edges; nothing floats "about there".
-- **Left-align by default.** Centered text only for short, isolated statements (hero line, empty state, dialog);
-  never center paragraphs longer than ~3 lines.
-- **Readable measure:** body text 45–75 characters per line (aim ~65); serif can run slightly longer.
-- **Hierarchy before decoration.** Each screen has one obvious entry point (largest/highest-contrast element), then
-  a clear secondary level, then everything else. Squint test: blur your eyes — the order should still read.
-- **Group by proximity.** Related items sit closer together than unrelated ones (internal spacing < external
-  spacing, at least 1.5–2×). Use space to separate groups before reaching for borders, boxes or dividers.
-- **Asymmetry with intent.** A strong layout often pairs a dominant element with a quieter column; vary section
-  rhythm (wide/narrow, dense/airy) instead of stacking identical bands.
-- **Structure is information.** Borders, numbering, labels, eyebrows and dividers must encode something true about
-  the content (a sequence, a category, a boundary). If it encodes nothing, delete it.
-- **Hero / first view:** lead with the most characteristic thing in the subject's world — a product in use, a
-  bold type statement, a live demo, an interactive moment, a strong photograph. The primary action is visible
-  without scrolling.
-- **App layouts:** stable navigation (sidebar or top bar) that doesn't move between screens; content area with
-  consistent page header (title, context, primary action on the right); dense data in tables/lists, not cards.
-- **Responsive from the start:** design fluid (`clamp()`, `minmax()`, `auto-fit` grids, container queries), check
-  320px, 375px, 768px, 1024px, 1440px, and very wide. No horizontal scroll, ever. Touch targets ≥ 44px on touch.
+## 3. Required step C — The plan (compact tokens)
 
-See `references/layout-spacing.md` for scales, grids and wireframe patterns.
+- **Concept:** one non-web reference for the look, grounded in the angle (a printed league newsletter, a
+  fight poster, a lab notebook, a transit map, a trophy shelf, a receipt). It guides type, layout and texture.
+- **Mode:** light or dark, **with a one-line reason**. Dark is not the default.
+- **Color:** 4–6 named hex values with roles. State **where color comes from** — prefer the content (team colors,
+  product photos, album art, categories, status) over a single brand accent painted on everything.
+- **Type:** 1–2 families with roles and a scale (§8). Name why they fit the concept.
+- **Layout:** one-sentence concept + ASCII wireframe of the first screen; compare two when unsure.
+- **Hero:** what goes in the first view and why it's the most characteristic content (§5).
+- **Signature:** the one memorable thing, and what stays quiet around it.
+
+Then **challenge it**: for each line ask "would I write this for any similar brief?" If yes, change it and say
+what changed. Then build.
+
+## 4. Required step D — Check before you call it done
+
+1. **Run the slop scan** on the files you wrote:
+   `node <skill-dir>/scripts/slop-check.mjs <file-or-folder>`
+   (`<skill-dir>` is this skill's folder, e.g. `~/.claude/skills/saintz-frontend`.) Fix every **FAIL**.
+   For each **WARN**, fix it or state in one line why the brief needs it. If Node isn't available, do the same
+   checks by searching the code for the patterns listed in §6.
+2. **Look at it.** Render it (browser pane / preview / headless screenshot) at **375px and 1440px** wide, and
+   review the screenshots against §6, §7 and §12. Fix what you see, re-check. If you truly cannot render,
+   say so explicitly — don't claim it was reviewed.
+3. **Remove one accessory** — the decoration doing the least work.
+4. Report briefly: the angle, what was banned, the signature, and the scan result.
 
 ---
 
-## 5. Spacing
+## 5. The first view
 
-- **Base unit 4px; work on an 8px rhythm.** Scale: `4, 8, 12, 16, 24, 32, 48, 64, 96, 128`. Pick from the scale;
-  don't invent 13px or 27px gaps.
-- **Spacing grows with hierarchy:** inside a control 8–12px → between related items 8–16px → between groups
-  24–32px → between sections 64–128px (desktop), roughly half on mobile.
-- **Generous, not empty.** Whitespace should frame content; if a section feels sparse, the content is too thin,
-  not the padding too big.
-- **Optical adjustments win:** icons beside text may need 1–2px nudges; text inside buttons sits visually
-  centered (cap height), not mathematically; pad containers so rounded corners don't crowd content
-  (nested radius = outer radius − padding).
-- **Vertical rhythm:** line-height multiples (e.g. 24px body leading) for paragraph spacing.
+- Put the **most distinctive content** first — the thing only this product has. If the best feature is below the
+  fold, the layout is wrong. (A league site's unique asset might be its pass charts or the group-chat banter, not a
+  generic headline box.)
+- The hero must contain **real content or a real visual**: product in use, a photograph, a live chart, an
+  interactive moment, a strong typographic statement. **No hero that's an empty tinted box with text in a corner.**
+  No decorative ghost numbers, faint grid lines or background blobs filling space.
+- Not the stock patterns: big-number + small-label + stat row; centered headline + subhead + two buttons +
+  screenshot in a fake browser; left text + right mockup with a glow behind it.
+- One primary action. A second button only if it's a genuinely different job.
 
----
+## 6. Hard budgets (the scan enforces most of these)
 
-## 6. Typography
+| Item | Budget |
+|---|---|
+| Middle-dot meta strings `A · B · C` | **0** — use line breaks, columns, or plain words ("Season 3, week 11") |
+| Spaced em/en-dash labels `WORD — fragment` | **0** |
+| `→` / `↗` appended to button/link text | **0** |
+| Small labels above headings (eyebrows/kickers) | **≤ 1 per screen**, only if it carries real info; sentence case |
+| `text-transform: uppercase` + letter-spacing on labels | **0** unless the concept demands it (then ≤ 1 style) |
+| Monospace for small data labels | **0** unless the subject is code |
+| Accent color uses per viewport | **≤ 3** (primary action, current state, one highlight) |
+| Badge/pill/chip styles | **≤ 1 style**; color-coded chips only when color *is* the data |
+| Card styles | **≤ 1**, and only for things that are objects (§7) |
+| Distinct border-radius values | **≤ 3** |
+| Gradient decoration / blurred blobs / glows with no content source | **0** |
+| One word of a headline in a different color/italic/gradient | **0** |
+| Emoji as icons, sparkles for "AI" | **0** |
+| Ambient (non-user-triggered) animations | **≤ 1** orchestrated moment per page |
+| Hover-lift on cards | only on items that open something, and not as the default for every box |
+| Text smaller than 12px (13px for body/meta on web) | **0** |
+| Body/meta text contrast | ≥ 4.5:1 (check muted grays on tinted backgrounds) |
 
-- Typography carries the personality. Choose typefaces **for this brief** — from the subject's vernacular, era or
-  tone — not the family you'd use anywhere. Good sources: Google Fonts, Fontshare, system stacks when native feel
-  is the point.
-- **One family, or two clearly different ones** (e.g. a characterful display + a quiet text face). Never two similar sans-serifs.
-- **Set a real scale.** Use a ratio (1.2 minor third for dense apps, 1.25–1.333 for general, 1.5+ for editorial
-  drama) and stick to its steps. Typically 5–7 sizes total.
-- **Weights with purpose:** 2–3 weights. Contrast via size and weight, not color alone.
-- **Tracking:** tighten large display type (−1% to −4%); loosen only small all-caps (+4–8%) — and use all caps
-  rarely. Line-height ~1.4–1.6 for body, 1.0–1.2 for display; serif body gets slightly more.
-- **Type as image:** when a headline is the visual element, treat it like one — scale, cropping, weight, width,
-  alignment — not a neutral container for words.
-- **Details:** tabular numerals for changing numbers/tables; real quotes and dashes (’ “ ” –); `text-wrap: balance`
-  for headings, `pretty` for paragraphs; no widows in headlines; underline links in body text.
+## 7. Containers: stop the card kit
 
----
+Cards are for **objects** — things you pick up as a unit (a product, a game, a person, a file). Everything else
+should sit directly on the page, organized by **space, alignment, type and rules**:
 
-## 7. Color
+- Lists and rankings → a real table or list with aligned columns (standings, leaderboards, settings).
+- Stats → a row of numbers set in type, no boxes around each.
+- News/updates → a typographic list or an editorial layout with varied sizes, not three equal tiles.
+- Sections → separated by space (64–128px) and a heading, not by wrapping each in a panel.
+- When you do use cards, vary their **importance**: one large, others smaller; not a grid of identical tiles.
+- If removing a box loses no information, remove the box.
 
-- **Derive the palette from the subject** (its materials, environment, era), not from trends.
-- **Structure:** ground (background), surface(s), ink, muted ink, one accent, plus semantic signals
-  (success/warning/danger/info). Rough proportion 60% ground, 30% surfaces/ink, ≤10% accent.
-- **Build ramps in OKLCH/HSL** so tints and shades stay in the same hue family; neutrals can carry a slight tint of
-  the brand hue to feel cohesive.
-- **Accent means "act here" or "look here".** If everything is accented, nothing is.
-- **Contrast:** body text ≥ 4.5:1, large text and UI boundaries ≥ 3:1. Never encode meaning by color alone.
-- **Dark mode is its own design**, not an inversion: lighter surfaces for elevation, desaturated accents,
-  slightly off-white text.
-- Real black/white are allowed; tinted near-blacks are a choice, not a default.
-
----
-
-## 8. Shape, depth, imagery
-
-- **Radius follows hierarchy:** small for small things (inputs, tags), larger for containers, full for pills/avatars —
-  or deliberately zero across the board if the brief is sharp. Not one radius on everything.
-- **Elevation is a system:** 2–3 levels max (flat, raised, floating). Shadows should be soft, layered, and tinted
-  by the background — or replace shadows with borders/contrast for a flatter brand.
-- **Icons:** one set, one stroke weight, one size grid (16/20/24). Pair with labels unless universally understood.
-- **Imagery:** real photos/screens of the actual product or subject beat illustrations; consistent crop, ratio and
-  treatment. Custom illustration only if it has a style specific to the brand.
+Test: take a screenshot and count the rounded rectangles. If most content lives inside them, restructure.
 
 ---
 
-## 9. Components & states
+## 8. Typography
 
-Every interactive element is designed in all its states: **default, hover, focus-visible, active/pressed, selected,
-disabled, loading, error, empty.** Specifically:
-- Buttons: one primary per view; secondary and tertiary visibly lower; verbs as labels; loading state keeps width.
-- Inputs: visible label (not placeholder-as-label), helper text, inline validation on blur, clear error text.
-- Lists/tables: zebra or dividers (not both), aligned numbers right, sticky headers for long tables, row actions on hover with keyboard access.
-- Feedback: skeletons shaped like real content for loads > 300ms; optimistic updates; toasts that name what happened with Undo for destructive actions.
-- Empty states: say what goes here and give the action to fill it.
-- Dialogs: only for decisions that need focus; Escape closes; focus is trapped and returned.
+- Typography carries the personality. Choose families **from the concept** (§3), never the default you'd use
+  anywhere (Inter/Roboto/system only when native feel *is* the point). Sources: Google Fonts, Fontshare, system.
+- One family, or two clearly different ones. Never two similar sans-serifs.
+- Real scale: ratio 1.2 (dense apps), 1.25–1.333 (general), 1.5+ (editorial). 5–7 sizes, 2–3 weights.
+- Display type: tighten tracking (−1% to −4%), line-height 1.0–1.15, `text-wrap: balance`. Body: 1.45–1.6,
+  `text-wrap: pretty`, 45–75 characters per line (aim ~65).
+- **Type as image:** when a headline is the visual, use scale, weight, width, cropping and alignment actively.
+- Tabular numerals for scores, stats, prices, times. Real quotes and apostrophes (’ “ ”).
+- Hierarchy through size and weight first, color second.
 
----
+## 9. Color
 
-## 10. Motion
+- Derive the palette from the concept and the content, not from trends. **Let content carry color** where it has
+  any (team colors, photos, categories, status), and keep the chrome neutral.
+- Roles: ground, surface (if needed), ink, muted ink, accent, signals. ~60/30/≤10.
+- Build ramps in OKLCH so tints stay in-family; neutrals may carry a hint of the ground hue.
+- Contrast: body ≥ 4.5:1, large text/UI boundaries ≥ 3:1; never color as the only signal.
+- Dark mode is its own design: surfaces get lighter as they rise, accents desaturate, text is slightly off-white.
+- Same-hue-on-same-hue (green cards on green ground) kills separation — change lightness by ≥ 8–10% L, or don't box it.
 
-- **Responsive motion is welcome:** anything that answers a user action — open, expand, confirm, drag, reorder —
-  should animate to show what changed (150–300ms, ease-out to enter, ease-in to exit, spring for physical objects).
-- **Ambient motion is rare:** at most one orchestrated moment per page (a load sequence, a single reveal, a hero
-  interaction). No staggered fade-up on every section, no hover-lift on every card by default.
-- Animate `transform` and `opacity`; avoid animating layout. Exits faster than entrances.
-- Always honor `prefers-reduced-motion` (turn non-essential motion off, don't just shorten it).
+## 10. Layout & spacing
 
----
+- **Grid:** 12 columns for marketing/editorial (max ~1120–1280px), 1–3 column flows for apps. Shared left edges.
+  Rows that don't fill their width (a 4-item strip in a 6-item space) either stretch, scroll, or get a different layout.
+- **Left-align by default**; center only short isolated statements.
+- **Hierarchy:** one entry point per screen; squint test must show the order.
+- **Proximity:** space inside a group ≤ half the space between groups. Separate with space before borders.
+- **Rhythm:** vary sections (wide/narrow, dense/airy, full-bleed/contained) instead of stacking identical bands.
+- **Spacing scale (4px base):** `4, 8, 12, 16, 24, 32, 48, 64, 96, 128`. Inside controls 8–12, related items
+  8–16, groups 24–32, sections 64–128 (about half on mobile).
+- **Structure is information:** numbering only for real sequences; labels, rules and boxes only when they encode
+  something true.
+- **Responsive from the start:** `clamp()`, `minmax()`, `auto-fit`, container queries. Check 375 / 768 / 1024 /
+  1440. No horizontal scroll. Touch targets ≥ 44px.
 
-## 11. Writing in the interface
+See `references/layout-spacing.md` for scales, grids, container alternatives and wireframe patterns.
 
-- Words exist to help people understand and act. Decide what the screen must say before writing it.
-- Name things from the user's side: "Notifications", not "Webhook config". Plain, specific, sentence case.
-- Active, exact CTAs: "Save changes", "Book a table", "Download for Windows" — never "Submit", "Learn more" everywhere.
-- Keep vocabulary consistent through a flow: the "Publish" button produces a "Published" toast.
-- Errors say what happened and how to fix it, in the product's voice; no apologies, no vagueness.
-- Empty screens invite the next action. Cut filler adjectives and marketing fog. One job per piece of text.
+## 11. Components, motion, writing
 
----
+**States:** design default, hover, focus-visible, active, selected, disabled, loading, error and empty for every
+interactive element. One primary button per view. Inputs have visible labels, helper text, inline errors.
+Skeletons shaped like real content. Toasts name what happened; destructive actions offer Undo.
 
-## 12. Quality floor (always, without announcing it)
+**Motion:** motion that answers an action (open, expand, confirm, reorder) is welcome — 150–300ms, ease-out in,
+faster out, springs for physical objects. Ambient motion: one orchestrated moment max. No fade-up on every
+section. Animate transform/opacity only. Honor `prefers-reduced-motion` by turning non-essential motion off.
 
-- Responsive down to 320px; no horizontal scroll; images sized and lazy-loaded.
-- Visible keyboard focus on everything interactive; logical tab order; semantic HTML (`button`, `nav`, `main`, headings in order); `alt` text; labels on icon-only buttons.
-- Contrast passes WCAG AA; color isn't the only signal.
-- Reduced motion respected; no layout shift when fonts/images load (set dimensions, `font-display: swap`).
-- CSS is maintainable: tokens as custom properties, low and consistent selector specificity (watch for type
-  selectors like `.section` padding fighting component selectors like `.cta`), no `!important` battles.
-- Performance: few font files, no giant unused libraries, animations on the compositor.
+**Writing:** name things from the user's side; plain, specific, sentence case; exact CTAs ("Submit result",
+"Book a table", never "Submit"/"Learn more" everywhere); same verb through a flow (Publish → Published);
+errors say what happened and how to fix it; empty states invite the next action. Write in the product's real
+voice — if the product has personality (a friends' league), the copy should too. Real content only, no lorem
+ipsum, no "Feature One", no "Unlock / Seamless / Elevate / Supercharge".
 
----
+## 12. Quality floor (always)
 
-## 13. Final critique checklist
+Responsive to 320px, visible keyboard focus, semantic HTML and labels on icon buttons, AA contrast,
+reduced motion, no layout shift (sized media, `font-display: swap`), tokens as CSS custom properties,
+low, consistent selector specificity (watch `.section` padding fighting `.cta` padding), no `!important` wars,
+few font files.
 
-- [ ] Could this design be swapped onto a different product without anyone noticing? If yes, it's generic — push the subject-specific choices further.
-- [ ] Nothing from the slop list (§3) is present by accident.
-- [ ] One clear signature element; everything else quiet.
-- [ ] Squint test passes: one entry point, clear hierarchy.
-- [ ] All spacing from the scale; edges aligned to the grid; groups separated by space.
-- [ ] Type scale has ≤7 sizes, ≤3 weights; measure ≤75ch.
-- [ ] Every structural device (labels, numbers, rules, boxes) encodes real information.
-- [ ] All interactive states exist; empty/error/loading designed.
-- [ ] Copy is specific, active and consistent.
-- [ ] Checked visually at phone, tablet and desktop widths; quality floor met.
-- [ ] One accessory removed.
+## 13. The generic-default catalogue (for calibration)
+
+Legitimate when a brief asks for them, never by reflex:
+1. Cream (~`#F4F1EA`) + high-contrast serif + terracotta (~`#D97757`).
+2. Near-black + one acid-green / vermilion / orange / electric-purple accent.
+3. Purple→blue or pink→orange gradients, blurred blobs, glowing orbs, corner glows.
+4. Broadsheet cosplay: hairlines everywhere, zero radius, dense columns for no reason.
+5. The SaaS card kit: identical rounded cards, one radius, `rgba(0,0,0,.1)` shadow, icon-in-tinted-circle feature trio.
+6. Template chrome: uppercase tracked eyebrows, `·` meta, `WORD — fragment`, mono labels, `→` on links, fake `01/02/03`.
+7. The category stereotype (§2).
+8. Empty hero box; ghost numbers; decorative grid lines.
+9. Tinted status chips sprinkled on every item.
+10. Filler copy and fake testimonials.

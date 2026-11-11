@@ -5,7 +5,7 @@ Two [Claude Code](https://claude.com/claude-code) skills for designing user inte
 | Skill | What it does |
 |---|---|
 | [`saintz-design`](skills/saintz-design/SKILL.md) | My house **look**: a dark, monochrome "liquid glass" style with frosted controls, white for the selected state, and springy motion. It includes exact colors, type scale, radii, glass recipes, component conventions and animation curves, plus a copy-paste [`tokens.css`](skills/saintz-design/references/tokens.css). |
-| [`saintz-frontend`](skills/saintz-frontend/SKILL.md) | The **process and quality bar**: start from the subject, plan the design, challenge anything that's a generic default (the "AI slop" list), then build and critique. It covers layout, spacing, typography, color, component states, motion, interface copy and accessibility, plus a [layout & spacing reference](skills/saintz-frontend/references/layout-spacing.md). |
+| [`saintz-frontend`](skills/saintz-frontend/SKILL.md) | The **process and quality bar**, with required steps: write the brief and the product's *angle*, ban the category's obvious choices, plan, build, then run a [slop scan](skills/saintz-frontend/scripts/slop-check.mjs) and review screenshots. It covers layout, spacing, typography, color, component states, motion, interface copy and accessibility, plus a [layout & spacing reference](skills/saintz-frontend/references/layout-spacing.md) that includes what to use instead of cards. |
 
 ## Why they work together
 
@@ -14,7 +14,17 @@ They answer two different questions:
 - **`saintz-frontend` answers *how* to design.** It works for any project and any brand: it makes Claude understand what's being built, plan a small token system, align everything to a grid and a spacing scale, design every state, write clear copy, and check the result at every screen size. It deliberately avoids the default looks that make generated pages feel templated.
 - **`saintz-design` answers *what it should look like*** when the project is one of mine or when you want this particular style. It's a finished visual language, so there's no need to invent a new palette or type scale each time.
 
-When both load, `saintz-frontend` runs the process and `saintz-design` supplies the look. Some things `saintz-frontend` lists as generic defaults (small uppercase eyebrow labels, `A · B · C` meta lines, hover lifts on cards) are deliberate parts of the `saintz-design` style. The skills say so, so they don't contradict each other. For any other brand or brief, `saintz-frontend` picks the look from the subject instead. Your own instructions always override both.
+When both load, `saintz-design` supplies the look and `saintz-frontend` still runs every required step on it. The house style gets no exemptions from the budgets: a good material (glass) doesn't stop a page from being generic if every section is boxed, every heading has a little label, and a stock glow fills the corner. For any other brand or brief, `saintz-frontend` picks the look from the subject instead. Your own instructions always override both.
+
+## Why the hard steps exist
+
+A list of "don't do this" isn't enough. Left alone, a model drifts back to the statistically likely design: a dark background with one bright accent, everything in rounded cards, `A · B · C` meta lines, and the category's stock look (turf green and condensed type for sports, navy for finance, neon for dev tools). So `saintz-frontend` makes Claude write down the product's angle and the obvious choices it's ruling out, and it ships with a checker:
+
+```bash
+node ~/.claude/skills/saintz-frontend/scripts/slop-check.mjs path/to/your/ui
+```
+
+It needs Node and has no dependencies. It reports **FAIL** (fix it) and **WARN** (fix it or justify it) for template chrome, decorative gradients, card-kit patterns, accent overuse, text under 12px, filler copy, missing reduced-motion support, missing focus styles, and more. It exits with code 1 if anything fails, so you can also use it in CI.
 
 ## Install
 

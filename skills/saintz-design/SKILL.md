@@ -10,9 +10,11 @@ description: Saintz's house design system — dark, monochrome "liquid glass" UI
 > only to fill gaps or polish. In non-CSS stacks, translate the values (colors, radii, durations, easing,
 > blur/opacity) into that framework's equivalents.
 >
-> **Pairs with `saintz-frontend`**, which owns process, layout, spacing, copy and the quality floor. Use this skill's
-> look for Saintz's own apps (or when the user asks for it); for other brands/briefs, `saintz-frontend` picks the
-> look. Inside this house style, the uppercase eyebrows, `·` meta lines and hover lifts are deliberate, not slop.
+> **Always run with `saintz-frontend`.** This skill is the *look*; `saintz-frontend` is the *process* — the brief and
+> angle, banning the category's obvious choices, the hard budgets, the slop scan and the screenshot review. Do all
+> of its required steps when using this look. **Nothing here exempts a design from those budgets**: no `·` meta
+> strings, no uppercase eyebrow on every heading, no decorative glows, no wrapping every section in a glass card.
+> The glass style is a material for *controls and floating surfaces*, not a reason to box all content.
 
 Both apps share one visual language: **a black (or near-black) stage, content artwork as the only real color,
 frosted glass controls floating on top, white as the "selected" color, and springy, physical motion.**
@@ -36,7 +38,13 @@ Follow these rules unless the user asks otherwise. `references/tokens.css` holds
    progressively on short/narrow windows.
 6. **Calm by default.** Secondary info is dimmed (`--text-2`, `--text-3`); row actions appear on hover; empty
    states are quiet glass cards with an icon, a title and one sentence.
-7. **Write friendly, human copy.** Sentence case, no ALL CAPS buttons, toasts that say what happened
+7. **Glass is for controls; content sits on the stage.** Nav, buttons, segmented controls, popovers, menus, sheets
+   and toasts are glass. Lists, tables, stats, news and sections sit directly on the dark stage, organized by
+   space, type and hairlines. A screen made of glass boxes is the card kit in a nicer material.
+8. **The content's own color leads.** Team colors, posters, album art, avatars and categories are where color comes
+   from. When a view has no artwork, it borrows the color of its featured item (e.g. the winning team) — it never
+   falls back to a stock purple/teal glow.
+9. **Write friendly, human copy.** Sentence case, no ALL CAPS buttons, toasts that say what happened
    ("Added to watchlist", "Got it — fewer like this"), with an **Undo** action for destructive things.
 
 ---
@@ -80,8 +88,9 @@ Pebble's brand accent is pale cyan `#bfefff`. Use `color-mix(in srgb, var(--acc)
 - Behind plain pages: a heavily blurred, desaturated copy of the current artwork
   (`filter: blur(70px) saturate(1.5) brightness(.55)`, `inset:-80px`, opacity ~.55) with a radial vignette to
   black, slowly drifting (`40s ease-in-out infinite alternate`).
-- With no art: soft radial blobs — `radial-gradient(120% 80% at 20% 0%, #3a2a5c, transparent 60%),
-  radial-gradient(100% 70% at 100% 100%, #1d3b4f, transparent 60%), #111014`.
+- With no art: **plain black stage** — or, if the view has a featured item with a color (a team, a playlist, a
+  category), a single very low wash of *that* color (≤ 12% opacity) behind the area that item owns. Never generic
+  purple/teal/amber corner glows; they read as decoration with no source.
 - Cheap trick (Pebble): draw the art onto a ~32px canvas and stretch it — pre-blurred, zero per-frame cost.
 
 ---
@@ -103,12 +112,16 @@ Pebble's brand accent is pale cyan `#bfefff`. Use `color-mix(in srgb, var(--acc)
 | Card title / emphasis | 15–17px | 600 | -.01 to -.02em |
 | Body | 14–16px, line-height 1.5–1.6 | 400–500 | default |
 | Caption / meta | 12.5–13px | 500–600 | default |
-| Tag / badge | 10.5–11.5px | 700 | +.03 to +.04em |
-| Eyebrow (uppercase) | 11–13px | 700 | +.06 to +.08em, `text-transform:uppercase` |
+| Tag / badge | 12px (never smaller) | 600–700 | default |
+| Context label (rare) | 13px | 600 | default, sentence case — at most one per screen, only when it carries information |
 | Giant number (stats/rank) | 36–150px | 700–800 | -.04 to -.08em |
 
 - Pebble (compact): base 13px; title 19px/700; artist 15px; list primary 13.5px/600, secondary 12px; section
   heading 22px/700. Lyrics: `clamp(17px, 3.6cqmin + 6px, 38px)`, weight ~760.
+- **Minimum size 12px**, and muted text (`--text-3`) only for genuinely secondary info — check it still reads on the
+  actual background. Dense views get *fewer* items, not smaller text.
+- **No `A · B · C` meta strings.** Put metadata on its own line, in columns, or in plain words ("Season 3, week 11";
+  "Final, overtime"). No uppercase tracked labels.
 - Odd half-sizes (12.5, 13.5, 14.5, 15.5) are intentional — use them for fine-tuning.
 - **Numbers that change** (times, counts, ratings, clocks): `font-variant-numeric: tabular-nums`.
 - Text on images: `text-shadow: 0 2px 14px rgba(0,0,0,.7)` or logo images with `filter: drop-shadow(...)`.
@@ -218,12 +231,19 @@ Scrolls horizontally with hidden scrollbar when it overflows.
 **Hero**
 - Full-bleed artwork, ~`clamp(440px,66vh,760px)`, slow Ken Burns zoom (24s alternate), two gradients
   (left-to-right dark for text, bottom-to-black to merge into page), content bottom-left, max-width ~540px.
-- Eyebrow pill (glass, 13px/600), logo/title, meta line with outlined badges, 2–3-line overview, buttons.
+- Logo/title, one meta line in plain words, 2–3-line overview, **one** primary button (a second only for a different job).
+- **No artwork available?** The hero is the most distinctive *content* instead (a live chart, the scoreline set huge
+  with both teams' colors, a real quote) — never a dark empty area with text in the corner.
 - Pagination dots: 7px dots, active one stretches to 22px.
 - Progressive disclosure via height media queries: hide eyebrow < 760px tall, overview < 680px.
 
 **Detail page** — fixed blurred backdrop artwork; content below on a **dark glass sheet** with 34px top corners
 (`rgba(8,8,10,.72)` + blur 48px), sliding up over the art.
+
+**Tables, standings, stats, news** — sit on the stage, not in glass cards. Tables: aligned columns, tabular
+numbers, hairline `--line` between rows, the user's own row subtly highlighted, team/artist color as a small
+mark (not a tinted chip). Stats: large numbers in type with labels under them. News: a typographic list with one
+lead item larger than the rest. Status: plain colored text or a dot, not a pill on every row.
 
 **Lists / rows** — rows 6–12px padding, radius 10–16px, hover `rgba(255,255,255,.05–.08)`, active `.13`;
 40px thumbnail (radius 6); primary 13.5–15px/600, secondary 12–13px dim; trailing actions hidden until hover.
@@ -274,8 +294,8 @@ on a left-dark gradient.
 **Use spring for** transforms (scale, translate, indicator moves, toggles, popovers). **Use ease for** opacity,
 color, background, filters.
 
-**Durations:** hover color .15–.25s · press/scale .25–.35s · cards & indicators .45s · page enter .5s ·
-popovers/sheets .35–.4s · close .18–.25s · ambient fades 1–1.6s · Ken Burns/drift 24–40s.
+**Durations:** hover color .15–.25s, press/scale .25–.35s, cards & indicators .45s, page enter .5s,
+popovers/sheets .35–.4s, close .18–.25s, ambient fades 1–1.6s, Ken Burns/drift 24–40s.
 
 **Standard keyframes:**
 - `fade` — `opacity 0, translateY(8px) → none` (content entering)
@@ -344,6 +364,10 @@ From Apple (tvOS/iOS/macOS HIG), Linear, Arc, Raycast, Spotify, Things, Figma, V
 
 ## 11. Checklist before finishing any UI
 
+- [ ] `saintz-frontend` steps done: brief + angle written, category's obvious choices banned, slop scan run
+      (`node ~/.claude/skills/saintz-frontend/scripts/slop-check.mjs <path>`), screenshots reviewed at 375 / 1440px
+- [ ] No `·` meta strings, no uppercase eyebrows, no stock glows; text ≥ 12px
+- [ ] Glass only on controls and floating surfaces; content on the stage, not in a grid of glass boxes
 - [ ] Dark stage, monochrome chrome, color only from content (or a deliberate accent on highlights)
 - [ ] Glass recipe on floating controls; floating surfaces darker and more opaque
 - [ ] White fill + black text for the single selected/primary state
