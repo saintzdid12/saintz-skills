@@ -2,6 +2,10 @@
 
 Two [Claude Code](https://claude.com/claude-code) skills for designing user interfaces that look intentional and polished instead of generic.
 
+![Same prompt, without vs with the Saintz skills](examples/showcase/overview.png)
+
+Four app ideas, each built from the same one-line prompt twice: once the usual way, once following the skills. Full-size comparisons: [houseplant tracker](examples/showcase/plants-compare.png), [coffee roaster](examples/showcase/coffee-compare.png), [uptime dashboard](examples/showcase/uptime-compare.png), [music app](examples/showcase/music-compare.png). The pages themselves are in [`examples/showcase/pages`](examples/showcase/pages).
+
 | Skill | What it does |
 |---|---|
 | [`saintz-design`](skills/saintz-design/SKILL.md) | My house **look**: a dark, monochrome "liquid glass" style with frosted controls, white for the selected state, and springy motion. It includes exact colors, type scale, radii, glass recipes, component conventions and animation curves, plus a copy-paste [`tokens.css`](skills/saintz-design/references/tokens.css). |

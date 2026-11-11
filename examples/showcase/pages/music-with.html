@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap" rel="stylesheet">
+<style>
+:root { color-scheme:dark; --bg:#000; --text:#f5f5f7; --text-2:rgba(235,235,245,.68); --text-3:rgba(235,235,245,.5); --line:rgba(255,255,255,.09); --on:rgba(255,255,255,.94);
+  --lg-fill:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05) 55%,rgba(255,255,255,.03)); --lg-tint:rgba(38,38,44,.38); --lg-edge:rgba(255,255,255,.13);
+  --lg-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 12px 36px rgba(0,0,0,.32); --spring:cubic-bezier(.2,.9,.25,1.1); --gutter:clamp(16px,4.4vw,64px); --r-s:10px; --r-m:14px; --r-l:22px; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:400 15px/1.5 Inter, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing:antialiased; }
+button { font:inherit; color:inherit; border:0; background:none; cursor:pointer; }
+:focus-visible { outline:2px solid rgba(255,255,255,.7); outline-offset:2px; }
+.glass { background:var(--lg-fill),var(--lg-tint); border:1px solid var(--lg-edge); box-shadow:var(--lg-shadow); backdrop-filter:blur(40px) saturate(210%); -webkit-backdrop-filter:blur(40px) saturate(210%); }
+nav.top { display:flex; align-items:center; gap:16px; padding:18px var(--gutter); }
+.brand { font-weight:750; font-size:17px; letter-spacing:-.02em; }
+.tabs { margin:0 auto; display:flex; gap:2px; padding:4px; border-radius:999px; }
+.tabs button { height:34px; padding:0 16px; border-radius:999px; font-weight:600; font-size:14px; color:var(--text-2); }
+.tabs button[aria-current] { background:var(--on); color:#000; }
+.me { width:34px; height:34px; border-radius:50%; background:#C2410C; display:grid; place-items:center; font-weight:700; font-size:13px; }
+
+.stage { position:relative; display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:clamp(32px,5vw,80px); align-items:center; padding:24px var(--gutter) 72px; }
+.stage::before { content:""; position:absolute; inset:-80px 0 0; z-index:-1; background:radial-gradient(55% 70% at 25% 40%, rgba(234,88,12,.22), transparent 70%); }
+.cover { aspect-ratio:1; border-radius:var(--r-l); overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.08); }
+.cover svg { width:100%; height:100%; display:block; }
+.who { color:var(--text-2); font-weight:500; margin:0 0 10px; display:flex; align-items:center; gap:10px; }
+.who i { width:28px; height:28px; border-radius:50%; background:#0F766E; display:inline-grid; place-items:center; font-style:normal; font-weight:700; font-size:12px; color:#fff; }
+h1 { font-size:clamp(40px,5.4vw,76px); font-weight:800; letter-spacing:-.045em; line-height:1; margin:0 0 8px; }
+.artist { font-size:clamp(18px,1.6vw,22px); color:var(--text-2); margin:0 0 26px; }
+.prog { display:flex; align-items:center; gap:12px; color:var(--text-3); font-size:13px; font-variant-numeric:tabular-nums; max-width:460px; }
+.prog div { flex:1; height:4px; border-radius:2px; background:rgba(255,255,255,.18); overflow:hidden; }
+.prog i { display:block; height:100%; width:38%; background:#fff; }
+.acts { display:flex; gap:12px; margin-top:26px; align-items:center; }
+.btn { height:44px; padding:0 20px; border-radius:var(--r-m); font-weight:650; transition:transform .3s var(--spring); }
+.btn:hover { transform:scale(1.04); }
+.btn.primary { background:var(--on); color:#000; }
+.note { margin-top:22px; color:var(--text-2); max-width:30em; font-size:16px; }
+.note b { color:var(--text); }
+
+h2 { font-size:22px; font-weight:700; letter-spacing:-.025em; margin:0 0 16px; }
+.lower { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:56px clamp(32px,5vw,80px); padding:48px var(--gutter) 96px; border-top:1px solid var(--line); }
+.friends { list-style:none; margin:0; padding:0; }
+.friends li { display:grid; grid-template-columns:44px minmax(0,1fr) auto; gap:14px; align-items:center; padding:12px 0; border-top:1px solid var(--line); }
+.friends .art { width:44px; height:44px; border-radius:var(--r-s); overflow:hidden; }
+.friends b { display:block; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.friends span { color:var(--text-2); font-size:14px; }
+.friends small { color:var(--text-3); font-size:13px; white-space:nowrap; }
+.shelf { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:22px; }
+.rec .art { aspect-ratio:1; border-radius:var(--r-m); overflow:hidden; box-shadow:0 14px 34px rgba(0,0,0,.5); }
+.rec b { display:block; margin-top:10px; font-weight:600; }
+.rec span { color:var(--text-2); font-size:14px; }
+.rec p { margin:6px 0 0; color:var(--text-3); font-size:13px; }
+@media (max-width:960px) { .stage, .lower { grid-template-columns:minmax(0,1fr); } .tabs { display:none; } .shelf { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+</style></head><body>
+<nav class="top"><div class="brand">Listening Room</div><div class="tabs glass"><button aria-current="page">Room</button><button>Shelf</button><button>Friends</button></div><button class="me" aria-label="Your profile">SZ</button></nav>
+<main>
+<section class="stage" aria-label="Now playing in the room">
+  <div class="cover" id="hero-cover"></div>
+  <div>
+    <p class="who"><i>MA</i>Maya has this on right now</p>
+    <h1>Orange Hours</h1>
+    <p class="artist">The Low Tide Club, side B</p>
+    <div class="prog"><span>2:14</span><div><i></i></div><span>5:52</span></div>
+    <div class="acts"><button class="btn primary">Listen along with Maya</button><button class="btn glass">Save to shelf</button></div>
+    <p class="note"><b>3 friends</b> are listening along. Maya’s note: “track 7 is the one, wait for the horns.”</p>
+  </div>
+</section>
+<div class="lower">
+  <section aria-labelledby="f-h"><h2 id="f-h">On everyone’s turntable</h2><ul class="friends" id="friends"></ul></section>
+  <section aria-labelledby="s-h"><h2 id="s-h">Passed around this week</h2><div class="shelf" id="shelf"></div></section>
+</div>
+</main>
+<script>
+function cover(k, a, b, c) {
+  const s = '<svg viewBox="0 0 100 100" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="100" height="100" fill="' + a + '"/>';
+  if (k === 'sun') return s + '<circle cx="50" cy="62" r="30" fill="' + b + '"/><rect y="62" width="100" height="38" fill="' + c + '"/><g fill="' + a + '"><rect y="70" width="100" height="3"/><rect y="80" width="100" height="4"/><rect y="91" width="100" height="5"/></g></svg>';
+  if (k === 'rings') return s + '<g fill="none" stroke-width="7"><circle cx="30" cy="70" r="16" stroke="' + b + '"/><circle cx="30" cy="70" r="32" stroke="' + c + '"/><circle cx="30" cy="70" r="48" stroke="' + b + '"/></g></svg>';
+  if (k === 'split') return s + '<path d="M0 100 L100 0 L100 100Z" fill="' + b + '"/><circle cx="68" cy="68" r="12" fill="' + c + '"/></svg>';
+  return s + '<rect x="14" y="14" width="72" height="72" fill="' + b + '"/><rect x="30" y="30" width="40" height="40" fill="' + c + '"/></svg>';
+}
+document.getElementById('hero-cover').innerHTML = cover('sun', '#7C2D12', '#FB923C', '#1C1917');
+const friends = [['Jonah', 'Night Swimming', 'Pale Harbor', 'for 12 min', ['rings', '#0C4A6E', '#38BDF8', '#E0F2FE']],
+  ['Priya', 'Paper Lanterns', 'Ojo Verde', 'for 40 min', ['split', '#14532D', '#A3E635', '#FEF9C3']],
+  ['Dev', 'Static Bloom', 'Kiko and the Hours', 'paused', ['box', '#3B0764', '#C084FC', '#FDE68A']],
+  ['Ana', 'Orange Hours', 'The Low Tide Club', 'with Maya', ['sun', '#7C2D12', '#FB923C', '#1C1917']]];
+document.getElementById('friends').innerHTML = friends.map(f => '<li><div class="art">' + cover(...f[4]) + '</div><div><b>' + f[0] + ': ' + f[1] + '</b><span>' + f[2] + '</span></div><small>' + f[3] + '</small></li>').join('');
+const recs = [['Glass Weather', 'Pale Harbor', 'From Jonah: “headphones only”', ['rings', '#1E1B4B', '#818CF8', '#C7D2FE']],
+  ['Second Summer', 'Ojo Verde', 'From Priya: “for the drive up”', ['split', '#713F12', '#FACC15', '#FFFFFF']],
+  ['Low Rooms', 'Mira Sol', 'From Dev: “trust me on side A”', ['box', '#111827', '#F43F5E', '#FDE2E4']],
+  ['Field Notes', 'Cass Ito', 'From Maya: “Sunday morning record”', ['sun', '#064E3B', '#FDE68A', '#022C22']]];
+document.getElementById('shelf').innerHTML = recs.map(r => '<div class="rec"><div class="art">' + cover(...r[3]) + '</div><b>' + r[0] + '</b><span>' + r[1] + '</span><p>' + r[2] + '</p></div>').join('');
+</script></body></html>

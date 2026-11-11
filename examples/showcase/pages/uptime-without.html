@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PulseWatch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0A0A0B;color:#e8e8ea;font-family:Inter,sans-serif}
+body::before{content:"";position:fixed;top:-200px;left:30%;width:600px;height:600px;background:radial-gradient(circle,rgba(34,255,136,.15),transparent 60%);filter:blur(40px);z-index:-1}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid #1d1d20}
+.logo{font-weight:700;font-size:20px}.logo span{color:#22FF88}
+nav a{margin:0 14px;color:#8b8b93;text-decoration:none;font-size:14px}
+.btn{background:#22FF88;color:#000;border:0;padding:10px 18px;border-radius:8px;font-weight:600}
+.wrap{padding:32px 40px}
+.banner{display:flex;align-items:center;gap:14px;padding:20px 24px;border-radius:14px;background:linear-gradient(90deg,rgba(34,255,136,.12),rgba(34,255,136,.02));border:1px solid rgba(34,255,136,.3);margin-bottom:28px}
+.dot{width:12px;height:12px;border-radius:50%;background:#22FF88;box-shadow:0 0 16px #22FF88}
+.banner b{font-size:18px}.mono{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6b6b73}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.m{background:#111113;border:1px solid #1f1f23;border-radius:14px;padding:20px}
+.m b{display:block;font-size:30px;margin-top:10px;font-family:"JetBrains Mono",monospace}.m .up{color:#22FF88;font-size:12px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.c{background:#111113;border:1px solid #1f1f23;border-radius:14px;padding:20px}
+.c h3{margin:0 0 4px;font-size:15px}.c svg{width:100%;height:60px;margin-top:14px}
+.pill{font-size:11px;padding:3px 8px;border-radius:999px;background:rgba(34,255,136,.12);color:#22FF88;font-weight:600;float:right}
+.pill.warn{background:rgba(255,184,0,.12);color:#ffb800}
+</style></head><body>
+<nav><div class="logo">⚡ Pulse<span>Watch</span></div><div><a href="#">Overview</a><a href="#">Monitors</a><a href="#">Incidents</a><a href="#">Status Pages</a></div><button class="btn">+ New Monitor</button></nav>
+<div class="wrap">
+<div class="banner"><div class="dot"></div><div><b>All Systems Operational</b><div class="mono">Last checked 12s ago · 38 monitors · 6 regions</div></div></div>
+<div class="metrics">
+<div class="m"><div class="mono">Uptime (30d)</div><b>99.98%</b><span class="up">↑ 0.02%</span></div>
+<div class="m"><div class="mono">Avg Response</div><b>142ms</b><span class="up">↓ 12ms</span></div>
+<div class="m"><div class="mono">Incidents</div><b>2</b><span class="up">↓ 3 this week</span></div>
+<div class="m"><div class="mono">Checks / min</div><b>2,280</b><span class="up">↑ 4%</span></div></div>
+<div class="cards" id="cards"></div></div>
+<script>
+const n=[["api.checkout","eu-west"],["api.auth","us-east"],["webhooks","us-east"],["search","ap-south"],["cdn.assets","global"],["api.payments","eu-west"]];
+document.getElementById('cards').innerHTML=n.map(([a,r],i)=>{let p='';for(let x=0;x<=40;x++)p+=`${x*10},${30+Math.sin(x*.7+i)*12+Math.random()*8} `;return `<div class="c"><span class="pill ${i==2?'warn':''}">${i==2?'Degraded':'Operational'}</span><h3>${a}</h3><div class="mono">${r} · HTTPS</div><svg viewBox="0 0 400 60" preserveAspectRatio="none"><polyline points="${p}" fill="none" stroke="#22FF88" stroke-width="2"/></svg></div>`}).join('');
+</script></body></html>
