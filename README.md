@@ -2,9 +2,20 @@
 
 Two [Claude Code](https://claude.com/claude-code) skills for designing user interfaces that look intentional and polished instead of generic.
 
+![A music app for friends, without vs with the Saintz skills](examples/showcase/music-compare.png)
+
+**Same prompt: "a music app for friends."** On the left, the usual result: purple-to-pink blobs, glass on everything, "Discover your perfect vibe", "AI-powered" sparkles and gradient squares for album art. On the right, with both skills:
+
+- **An angle instead of a category.** It's about what your friends are playing right now, so the hero is Maya's record and the main button is *Listen along with Maya*.
+- **Color comes from the music.** The only glow on the page comes from the album cover. Everything else is black and white.
+- **Glass only where you press.** Tabs and buttons are glass; the friends list and the shelf sit directly on the page.
+- **Real voice.** Friends' notes ("track 7 is the one, wait for the horns") instead of "Unlock personalized playlists".
+
+### Four apps, both ways
+
 ![Same prompt, without vs with the Saintz skills](examples/showcase/overview.png)
 
-Four app ideas, each built from the same one-line prompt twice: once the usual way, once following the skills. Full-size comparisons: [houseplant tracker](examples/showcase/plants-compare.png), [coffee roaster](examples/showcase/coffee-compare.png), [uptime dashboard](examples/showcase/uptime-compare.png), [music app](examples/showcase/music-compare.png). The pages themselves are in [`examples/showcase/pages`](examples/showcase/pages).
+Each was built from the same one-line prompt twice: once the usual way, once following the skills. Full-size comparisons: [houseplant tracker](examples/showcase/plants-compare.png), [coffee roaster](examples/showcase/coffee-compare.png), [uptime dashboard](examples/showcase/uptime-compare.png), [music app](examples/showcase/music-compare.png). The pages themselves are in [`examples/showcase/pages`](examples/showcase/pages).
 
 | Skill | What it does |
 |---|---|
